@@ -39,8 +39,7 @@ public class algorithms {
 		System.out.println(s.get_tardiness());
 		
 		try {
-			s = best_first_search.search();
-			System.out.println(s.get_tardiness());
+			new DynamicSchedule(jobs);
 		} catch(Throwable e) {
 			// catches out of memory errors
 			e.printStackTrace();
