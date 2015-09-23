@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Scanner;
 
-
+//testcomment
 public class algorithms {
 	static int num_jobs;
 	// size = [num_jobs][2], for every job [0] is the length, [1] is the due time
