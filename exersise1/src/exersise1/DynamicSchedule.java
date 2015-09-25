@@ -36,7 +36,7 @@ public class DynamicSchedule extends schedule {
         if (jobs.size() == 1) {
             int[] job = jobs.get(0);
             return Math.max(0, job[1] - (job[0] + time));
-        } else if (jobs.size() == 0) {
+        } else if (jobs.isEmpty()) {
             return 0;
         }
 
@@ -69,6 +69,8 @@ public class DynamicSchedule extends schedule {
         
         System.out.println("Time = " + time + " , Tardiness = " + min);
 
+        cache.put(jobs, min);
+        
         return min;
     }
     
