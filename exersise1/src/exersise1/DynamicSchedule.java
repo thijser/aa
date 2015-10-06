@@ -33,10 +33,7 @@ public class DynamicSchedule extends schedule {
             return cache.get(jobs);
         }
         
-        if (jobs.size() == 1) {
-            int[] job = jobs.get(0);
-            return Math.max(0, job[0] + time - job[1]);
-        } else if (jobs.isEmpty()) {
+        if (jobs.isEmpty()) {
             return 0;
         }
 
@@ -66,8 +63,6 @@ public class DynamicSchedule extends schedule {
                 min = tardiness;
             }
         }
-        
-        System.out.println("Time = " + time + " , Tardiness = " + min);
 
         cache.put(jobs, min);
         

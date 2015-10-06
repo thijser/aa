@@ -37,6 +37,10 @@ public class algorithms {
 		read_problem(args[0]);
 		schedule s = greedy.greedy();
 		System.out.println(s.get_tardiness());
+                
+                s = best_first_search.search();
+                
+		System.out.println(s.get_tardiness());
 		
 		try {
 			new DynamicSchedule(jobs);
