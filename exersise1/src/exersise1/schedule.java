@@ -41,7 +41,7 @@ class schedule implements Comparable {
     @Override
     public String toString() {
         String ret = "";
-        ret = ret + " task: " + scheduled_job + ", tardiness = " + tardiness;
+        ret = ret + "; task: " + scheduled_job + ", tardiness = " + tardiness;
         if (previous != null) {
             ret = ret + previous.toString();
         }

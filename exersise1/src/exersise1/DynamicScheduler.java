@@ -1,11 +1,10 @@
 package exersise1;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Objects;
 
 /**
  * Returns the schedule with the lowest possible tardiness (Computed
@@ -15,7 +14,7 @@ import java.util.List;
  */
 public class DynamicScheduler {
 
-    private HashMap<ArrayList<Integer>, Integer> cache;
+    private HashMap<Pair, Integer> cache;
     private ArrayList<Integer> jobs;
 
     public DynamicScheduler() {
@@ -48,12 +47,9 @@ public class DynamicScheduler {
         
         int delta = getDelta(jobs, time, indexMax);        
         
-        ArrayList<Integer> beforeMax = new ArrayList();
-        beforeMax.addAll(jobs.subList(0, indexMax));
-        beforeMax.addAll(jobs.subList(indexMax + 1, indexMax + delta + 1));
+        ArrayList<Integer> beforeMax = getBefore(jobs, indexMax, delta);
 
-        ArrayList<Integer> afterMax = new ArrayList();
-        afterMax.addAll(jobs.subList(indexMax + delta + 1, jobs.size()));
+        ArrayList<Integer> afterMax = getAfter(jobs, indexMax, delta);
         
         int completion = time + getProcessingTime(beforeMax) + algorithms.jobs[jobs.get(indexMax)][0];
         
@@ -84,8 +80,10 @@ public class DynamicScheduler {
     }
 
     private int getTardiness(ArrayList<Integer> jobs, int time) {
-        if (cache.containsKey(jobs)) {
-            return cache.get(jobs);
+        Pair key = new Pair(jobs, time);
+        
+        if (cache.containsKey(key)) {
+            return cache.get(key);
         }
 
         if (jobs.isEmpty()) {
@@ -98,7 +96,7 @@ public class DynamicScheduler {
 
         int tardiness = getTardiness(jobs, time, indexMax, delta);
         
-        cache.put(jobs, tardiness);
+        cache.put(key, tardiness);
 
         return tardiness;
     }
@@ -132,18 +130,30 @@ public class DynamicScheduler {
     }
 
     private int getTardiness(ArrayList<Integer> jobs, int time, int indexMax, int delta) {
-        ArrayList<Integer> beforeMax = new ArrayList();
-        beforeMax.addAll(jobs.subList(0, indexMax));
-        beforeMax.addAll(jobs.subList(indexMax + 1, indexMax + delta + 1));
+        ArrayList<Integer> beforeMax = getBefore(jobs, indexMax, delta);
 
-        ArrayList<Integer> afterMax = new ArrayList();
-        afterMax.addAll(jobs.subList(indexMax + delta + 1, jobs.size()));
+        ArrayList<Integer> afterMax = getAfter(jobs, indexMax, delta);
 
         int completion = time + getProcessingTime(beforeMax) + algorithms.jobs[jobs.get(indexMax)][0];
 
         int tardiness = Math.max(0, completion - algorithms.jobs[jobs.get(indexMax)][1]) + getTardiness(beforeMax, time) + getTardiness(afterMax, completion);
 
         return tardiness;
+    }
+    
+    private ArrayList<Integer> getBefore(ArrayList<Integer> jobs, int indexMax, int delta) {
+        ArrayList<Integer> beforeMax = new ArrayList();
+        beforeMax.addAll(jobs.subList(0, indexMax));
+        beforeMax.addAll(jobs.subList(indexMax + 1, indexMax + delta + 1));
+        
+        return beforeMax;        
+    }
+    
+    private ArrayList<Integer> getAfter(ArrayList<Integer> jobs, int indexMax, int delta) {        
+        ArrayList<Integer> afterMax = new ArrayList();
+        afterMax.addAll(jobs.subList(indexMax + delta + 1, jobs.size()));
+        
+        return afterMax;
     }
 
     private int getProcessingTime(ArrayList<Integer> jobs) {
@@ -156,4 +166,42 @@ public class DynamicScheduler {
         return t;
     }
 
+    
+    private class Pair {
+        private ArrayList<Integer> jobs;
+        private int time;
+
+        private Pair(ArrayList<Integer> jobs, int time) {
+            this.jobs = jobs;
+            this.time = time;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 7;
+            hash = 97 * hash + Objects.hashCode(this.jobs);
+            hash = 97 * hash + this.time;
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final Pair other = (Pair) obj;
+            if (!Objects.equals(this.jobs, other.jobs)) {
+                return false;
+            }
+            if (this.time != other.time) {
+                return false;
+            }
+            return true;
+        }
+        
+        
+    }
 }
