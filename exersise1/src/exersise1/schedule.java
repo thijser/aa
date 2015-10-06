@@ -38,6 +38,15 @@ class schedule implements Comparable {
 	// if memory is an issue, however, try calculating it
 	public int tardiness;
 	
+	@Override
+	public String toString(){
+		String ret="";
+		ret=ret+" < task: "+scheduled_job+"tardiness = "+ tardiness;
+		if(previous!=null);
+			ret=ret+previous.toString();
+		return ret;
+	}
+	
 	public schedule(){
 		scheduled_job = -1;
 		previous = null;
@@ -155,4 +164,7 @@ class best_first_search {
 		}
 		return best_schedule;
 	}
+	
+
 }
+
