@@ -60,7 +60,7 @@ public class DynamicSchedule extends schedule {
                         
             int completion = time + getProcessingTime(beforeMax) + jobs.get(indexMax)[0];
             
-            int tardiness = Math.max(0, (jobs.get(indexMax)[0] + time) - jobs.get(indexMax)[1]) + getTardiness(beforeMax, time) + getTardiness(afterMax, completion);
+            int tardiness = Math.max(0, completion - jobs.get(indexMax)[1]) + getTardiness(beforeMax, time) + getTardiness(afterMax, completion);
             
             if (tardiness < min) {
                 min = tardiness;
