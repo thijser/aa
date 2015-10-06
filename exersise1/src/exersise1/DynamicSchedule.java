@@ -35,7 +35,7 @@ public class DynamicSchedule extends schedule {
         
         if (jobs.size() == 1) {
             int[] job = jobs.get(0);
-            return Math.max(0, job[1] - (job[0] + time));
+            return Math.max(0, job[0] + time - job[1]);
         } else if (jobs.isEmpty()) {
             return 0;
         }
