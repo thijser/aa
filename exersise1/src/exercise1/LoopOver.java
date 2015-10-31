@@ -16,8 +16,9 @@ public class LoopOver {
 	
 	static int timeout=100000;
 	static double epsilon;
+	
 	public static String location="/home/thijs/Desktop/code/aa/tests";
-    public static void main(String args[]) {
+    public static void main(String args[]) throws InterruptedException {
     	
     	  File dir = new File(location);
     	  File[] directoryListing = dir.listFiles();
@@ -26,10 +27,16 @@ public class LoopOver {
     		  System.out.print(";TF="+f.getName().substring(17, 20));
     		 algorithms.read_problem(f.getPath());
     		  System.out.println();
-    		  Thread t = new Thread();
+    		  Thread t = new Thread(new executeAprox());
     		  t.start();
-    		  Thread.sleep(timeout);
-    		  
+    		  long start=System.currentTimeMillis();
+    		  while(t.isAlive()&&start-System.currentTimeMillis()<timeout){
+    			  Thread.sleep(1000);
+    		  }
+    		  if(t.isAlive()){
+    			  t.interrupt();
+    			  System.out.print("interupted;interupted;");
+    		  }
     	  }
     }
     
