@@ -34,8 +34,6 @@ public class algorithms {
         }
     }
 
-    
-    
     // reads a problem, and outputs the result of both greedy and best-first
     public static void main(String args[]) {
         read_problem(args[0]);
@@ -44,7 +42,7 @@ public class algorithms {
             
             System.out.println((int)s.get_tardiness());
             
-            s = ApproximateScheduler.getSchedule(0.2);
+            s = (new DynamicScheduler()).getSchedule();
 
             System.out.println((int)s.get_tardiness());
         } catch (Throwable e) {
