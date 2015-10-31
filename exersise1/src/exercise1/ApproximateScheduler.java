@@ -27,7 +27,7 @@ public class ApproximateScheduler {
     	algorithms.processing=scaledProponent;
     	schedule s = (new DynamicScheduler()).getSchedule();
     	algorithms.due = due;
-    	algorithms.processing = proccesing;
+    	algorithms.processing = proccesing;st
     	s.recalculateTardiness();
     	return s;
     }
