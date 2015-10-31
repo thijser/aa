@@ -72,3 +72,4 @@ nb-configuration.xml
 # Notepad++ backups #
 *.bak
 
+/Advanced Algorithms/nbproject/private/
