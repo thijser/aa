@@ -38,9 +38,9 @@ public class algorithms {
     public static void main(String args[]) {
         double epsilon = Integer.parseInt(args[0]);
         read_problem(args[1]);
-        
+
         schedule optimal = (new DynamicScheduler()).getSchedule();
         schedule approx = ApproximateScheduler.getSchedule(epsilon);
-        System.out.println((int)optimal.get_tardiness() + " " + (int)approx.get_tardiness());
+        System.out.println((int) optimal.get_tardiness() + " " + (int) approx.get_tardiness());
     }
 }
