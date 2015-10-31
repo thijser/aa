@@ -30,9 +30,7 @@ public class LoopOver {
     		  Thread t = new Thread(new executeAprox());
     		  t.start();
     		  long start=System.currentTimeMillis();
-    		  while(t.isAlive()&&start-System.currentTimeMillis()<timeout){
-    			  Thread.sleep(1000);
-    		  }
+    		  t.join(timeout);
     		  if(t.isAlive()){
     			  t.interrupt();
     			  System.out.print("interupted;interupted;");
