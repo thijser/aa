@@ -15,9 +15,9 @@ import com.sun.corba.se.impl.orbutil.closure.Future;
 public class LoopOver {
 	
 	static int timeout=100000;
-	static double epsilon;
+	static double epsilon = 1;
 	
-	public static String location="/home/thijs/Desktop/code/aa/tests";
+	public static String location="/home/jorik/NetBeansProjects/Advanced Algorithms/tests";
     public static void main(String args[]) throws InterruptedException {
     	
     	  File dir = new File(location);
