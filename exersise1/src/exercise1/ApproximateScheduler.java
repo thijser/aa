@@ -1,4 +1,4 @@
-package exersise1;
+package exercise1;
 
 /**
  *Returns a approximately optimal schedule

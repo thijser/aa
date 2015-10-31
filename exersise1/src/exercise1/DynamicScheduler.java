@@ -1,4 +1,4 @@
-package exersise1;
+package exercise1;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,8 +7,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 /**
- * Returns the schedule with the lowest possible tardiness (Computed
- * dynamically)
+ * Returns the schedule with the lowest possible tardiness (Computed dynamically)
  *
  */
 public class DynamicScheduler {
