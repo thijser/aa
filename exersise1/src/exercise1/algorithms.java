@@ -34,6 +34,8 @@ public class algorithms {
         }
     }
 
+    
+    
     // reads a problem, and outputs the result of both greedy and best-first
     public static void main(String args[]) {
         read_problem(args[0]);
