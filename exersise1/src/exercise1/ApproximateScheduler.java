@@ -10,10 +10,11 @@ public class ApproximateScheduler {
 	public static schedule getSchedule(double epsilon) {
 		
     	ArrayList<Integer> jobs = new ArrayList<Integer>();
-    	for(int i=0;i<algorithms.num_jobs;i++){
-    		jobs.set(i, i);
-    	}
+    	for (int i = 0;i < algorithms.num_jobs;i++) {
+            jobs.add(i);
+        }
     	Collections.sort(jobs,new DueComparator());
+        
     	double highestTardiness=getMaxTardiness(jobs);
     	if(highestTardiness<0.0001) //avoid rounding errors
     		return schedule.MakeSchedule(jobs);
