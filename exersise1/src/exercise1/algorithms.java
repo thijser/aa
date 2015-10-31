@@ -36,18 +36,11 @@ public class algorithms {
 
     // reads a problem, and outputs the result of both greedy and best-first
     public static void main(String args[]) {
-        read_problem(args[0]);
-        try {
-            schedule s = best_first_search.search();
-            
-            System.out.println((int)s.get_tardiness());
-            
-            s = (new DynamicScheduler()).getSchedule();
+        double epsilon = Integer.parseInt(args[0]);
+        read_problem(args[1]);
 
-            System.out.println((int)s.get_tardiness());
-        } catch (Throwable e) {
-            // catches out of memory errors
-            e.printStackTrace();
-        }
+        schedule optimal = (new DynamicScheduler()).getSchedule();
+        schedule approx = ApproximateScheduler.getSchedule(epsilon);
+        System.out.println((int) optimal.get_tardiness() + " " + (int) approx.get_tardiness());
     }
 }
