@@ -8,8 +8,8 @@ import java.util.Scanner;
 public class algorithms {
 
     static int num_jobs;
-    // size = [num_jobs][2], for every job [0] is the length, [1] is the due time
-    static int jobs[][];
+    static int processing[]; //Processing times
+    static double due[]; //Due times
 
     // reading a minimum tardiness scheduling problem from a file
     public static void read_problem(String text_file) {
@@ -18,12 +18,13 @@ public class algorithms {
             s = new Scanner(new BufferedReader(new FileReader(text_file)));
             if (s.hasNextInt()) {
                 num_jobs = s.nextInt();
-                jobs = new int[num_jobs][2];
+                processing = new int[num_jobs];
+                due = new double[num_jobs];
                 int job = 0;
 
                 while (s.hasNextInt() && job < num_jobs) {
-                    jobs[job][0] = s.nextInt();
-                    jobs[job][1] = s.nextInt();
+                    processing[job] = s.nextInt();
+                    due[job] = s.nextInt();
                     job++;
                 }
             }
@@ -37,10 +38,13 @@ public class algorithms {
     public static void main(String args[]) {
         read_problem(args[0]);
         try {
+            schedule s = best_first_search.search();
+            
+            System.out.println((int)s.get_tardiness());
+            
+            s = (new DynamicScheduler()).getSchedule();
 
-            schedule s = (new DynamicScheduler()).getSchedule();
-
-            System.out.println(s.get_tardiness());
+            System.out.println((int)s.get_tardiness());
         } catch (Throwable e) {
             // catches out of memory errors
             e.printStackTrace();

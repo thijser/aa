@@ -36,7 +36,7 @@ class schedule implements Comparable {
 	// tardiness can be calculated instead of memorized
     // however, we need to calculate it a lot, so we momorize it
     // if memory is an issue, however, try calculating it
-    public int tardiness;
+    public double tardiness;
 
     @Override
     public String toString() {
@@ -58,7 +58,7 @@ class schedule implements Comparable {
     public schedule(schedule s, int job) {
         previous = s;
         scheduled_job = job;
-        tardiness = Math.max(0, get_total_time() - algorithms.jobs[scheduled_job][1]);
+        tardiness = Math.max(0, get_total_time() - algorithms.due[scheduled_job]);
         if (previous != null) {
             tardiness += previous.tardiness;
         }
@@ -67,7 +67,13 @@ class schedule implements Comparable {
 	// used by the best-first search
     // currently, schedules are traversed in smallest total tardiness order
     public int compareTo(Object o) {
-        return (get_tardiness()) - (((schedule) o).get_tardiness());
+        double dif = (get_tardiness()) - (((schedule) o).get_tardiness());
+        
+        if (dif == 0) {
+            return 0;
+        }
+        
+        return dif < 0 ? -1 : 1;
 
 		// replace with the following to get a depth-first search
         // return get_depth() - ((schedule)o).get_depth();
@@ -82,17 +88,17 @@ class schedule implements Comparable {
 
     public int get_total_time() {
         if (previous != null) {
-            return previous.get_total_time() + algorithms.jobs[scheduled_job][0];
+            return previous.get_total_time() + algorithms.processing[scheduled_job];
         }
-        return algorithms.jobs[scheduled_job][0];
+        return algorithms.processing[scheduled_job];
     }
 
-    public int get_tardiness() {
+    public double get_tardiness() {
         return tardiness;
     }
 
     public void recalculateTardiness() {           
-        tardiness = Math.max(0, get_total_time() - algorithms.jobs[scheduled_job][1]);   
+        tardiness = Math.max(0, get_total_time() - algorithms.due[scheduled_job]);   
         
         if (previous != null) {
             previous.recalculateTardiness();
@@ -111,11 +117,11 @@ class greedy {
     // to use this as a subroutine for a search method
 
     public static schedule greedy() {
-        int due = -1;
+        double due = -1;
         int job_to_schedule = -1;
         for (int i = 0; i < algorithms.num_jobs; ++i) {
-            if (due == -1 || due > algorithms.jobs[i][1]) {
-                due = algorithms.jobs[i][1];
+            if (due == -1 || due > algorithms.due[i]) {
+                due = algorithms.due[i];
                 job_to_schedule = i;
             }
         }
@@ -128,11 +134,11 @@ class greedy {
             return s;
         }
 
-        int due = -1;
+        double due = -1;
         int job_to_schedule = -1;
         for (int i = 0; i < algorithms.num_jobs; ++i) {
-            if (s.contains(i) == false && (due == -1 || due > algorithms.jobs[i][1])) {
-                due = algorithms.jobs[i][1];
+            if (s.contains(i) == false && (due == -1 || due > algorithms.due[i])) {
+                due = algorithms.due[i];
                 job_to_schedule = i;
             }
         }

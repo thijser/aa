@@ -10,11 +10,10 @@ import java.util.Objects;
  * Returns the schedule with the lowest possible tardiness (Computed
  * dynamically)
  *
- *
  */
 public class DynamicScheduler {
 
-    private HashMap<Pair, Integer> cache;
+    private HashMap<Pair, Double> cache;
     private ArrayList<Integer> jobs;
 
     public DynamicScheduler() {
@@ -29,7 +28,11 @@ public class DynamicScheduler {
         Collections.sort(jobs, new Comparator<Integer>() {
             @Override
             public int compare(Integer t, Integer t1) {
-                return algorithms.jobs[t][1] - algorithms.jobs[t1][1];
+                double dif = algorithms.due[t] - algorithms.due[t1];
+                if (dif == 0) {
+                    return 0;
+                } 
+                return dif < 0 ? -1 : 1;
             }
         });
     }
@@ -51,7 +54,7 @@ public class DynamicScheduler {
 
         ArrayList<Integer> afterMax = getAfter(jobs, indexMax, delta);
         
-        int completion = time + getProcessingTime(beforeMax) + algorithms.jobs[jobs.get(indexMax)][0];
+        int completion = time + getProcessingTime(beforeMax) + algorithms.processing[jobs.get(indexMax)];
         
         schedule first = getSchedule(beforeMax, time);
         if (first.scheduled_job == -1) {
@@ -79,7 +82,7 @@ public class DynamicScheduler {
         return second;
     }
 
-    private int getTardiness(ArrayList<Integer> jobs, int time) {
+    private double getTardiness(ArrayList<Integer> jobs, int time) {
         Pair key = new Pair(jobs, time);
         
         if (cache.containsKey(key)) {
@@ -94,7 +97,7 @@ public class DynamicScheduler {
 
         int delta = getDelta(jobs, time, indexMax);
 
-        int tardiness = getTardiness(jobs, time, indexMax, delta);
+        double tardiness = getTardiness(jobs, time, indexMax, delta);
         
         cache.put(key, tardiness);
 
@@ -105,7 +108,7 @@ public class DynamicScheduler {
         int indexMax = 0;
 
         for (int i = 1; i < jobs.size(); i++) {
-            if (algorithms.jobs[jobs.get(i)][0] > algorithms.jobs[jobs.get(indexMax)][0]) {
+            if (algorithms.processing[jobs.get(i)] > algorithms.processing[jobs.get(indexMax)]) {
                 indexMax = i;
             }
         }
@@ -114,11 +117,11 @@ public class DynamicScheduler {
     }
 
     private int getDelta(ArrayList<Integer> jobs, int time, int indexMax) {
-        int min = Integer.MAX_VALUE;
+        double min = Double.MAX_VALUE;
         int bestDelta = -1;
 
         for (int delta = 0; delta < jobs.size() - indexMax; delta++) {
-            int tardiness = getTardiness(jobs, time, indexMax, delta);
+            double tardiness = getTardiness(jobs, time, indexMax, delta);
 
             if (tardiness < min) {
                 min = tardiness;
@@ -129,14 +132,14 @@ public class DynamicScheduler {
         return bestDelta;
     }
 
-    private int getTardiness(ArrayList<Integer> jobs, int time, int indexMax, int delta) {
+    private double getTardiness(ArrayList<Integer> jobs, int time, int indexMax, int delta) {
         ArrayList<Integer> beforeMax = getBefore(jobs, indexMax, delta);
 
         ArrayList<Integer> afterMax = getAfter(jobs, indexMax, delta);
 
-        int completion = time + getProcessingTime(beforeMax) + algorithms.jobs[jobs.get(indexMax)][0];
+        int completion = time + getProcessingTime(beforeMax) + algorithms.processing[jobs.get(indexMax)];
 
-        int tardiness = Math.max(0, completion - algorithms.jobs[jobs.get(indexMax)][1]) + getTardiness(beforeMax, time) + getTardiness(afterMax, completion);
+        double tardiness = Math.max(0, completion - algorithms.due[jobs.get(indexMax)]) + getTardiness(beforeMax, time) + getTardiness(afterMax, completion);
 
         return tardiness;
     }
@@ -160,7 +163,7 @@ public class DynamicScheduler {
         int t = 0;
 
         for (int job : jobs) {
-            t += algorithms.jobs[job][0];
+            t += algorithms.processing[job];
         }
 
         return t;
