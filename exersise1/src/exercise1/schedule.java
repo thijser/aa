@@ -9,6 +9,7 @@ package exercise1;
 
 // for file reading and writing
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 // for the best-first (and breadth-first) search
@@ -64,6 +65,13 @@ class schedule implements Comparable {
         }
     }
 
+    public static schedule MakeSchedule(ArrayList<Integer> jobs){
+    	schedule s = new schedule();
+    	for(Integer i : jobs){
+    		s=new schedule(s,i);
+    	}
+    	return s;
+    }
 	// used by the best-first search
     // currently, schedules are traversed in smallest total tardiness order
     public int compareTo(Object o) {

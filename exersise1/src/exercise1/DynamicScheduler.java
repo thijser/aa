@@ -24,16 +24,7 @@ public class DynamicScheduler {
             jobs.add(i);
         }
 
-        Collections.sort(jobs, new Comparator<Integer>() {
-            @Override
-            public int compare(Integer t, Integer t1) {
-                double dif = algorithms.due[t] - algorithms.due[t1];
-                if (dif == 0) {
-                    return 0;
-                } 
-                return dif < 0 ? -1 : 1;
-            }
-        });
+        Collections.sort(jobs, new DueComparator());
     }
 
     public schedule getSchedule() {

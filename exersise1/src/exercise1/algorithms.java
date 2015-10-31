@@ -42,7 +42,7 @@ public class algorithms {
             
             System.out.println((int)s.get_tardiness());
             
-            s = (new DynamicScheduler()).getSchedule();
+            s = ApproximateScheduler.getSchedule(0.2);
 
             System.out.println((int)s.get_tardiness());
         } catch (Throwable e) {
