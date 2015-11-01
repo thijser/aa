@@ -29,8 +29,6 @@
 The minimum tardiness (scheduling) problem is defined as follows: given a single processor that has to process $n$ jobs $j_1,j_2,\dots,j_n$, where every job $j_i$ has a processing time/length $t_i$ and a due time $d_i$. Find a schedule that minimizes the total tardiness, i.e. $\sum_{i=1}^{n}{\max(0,c_i - d_i)}$, where $c_i$ is the completion time of job $i$.
 
 For assignment 1 of the course Advanced Algorithms we had to implement both the exact dynamic programming algorithm given in \cite{exact} and the approximate algorithm (FPTAS) given in \cite{approx}.
-
-In section 2 and 3 we will give a brief description of the exact algorithm and the approximate algorithm respectively. In section 4 we will compare the run time and tardiness scores of the algorithms, a greedy implementation and a best-first implementation. Finally, in section 5 we will motive the approach we would most likely use in practice.
 	
 \bibliographystyle{unsrt}
 \bibliography{mybibfile}
