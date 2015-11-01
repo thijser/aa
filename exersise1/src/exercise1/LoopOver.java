@@ -15,7 +15,7 @@ import com.sun.corba.se.impl.orbutil.closure.Future;
 public class LoopOver {
 	
 	static int timeout=100000;
-	static double epsilon;
+	static double epsilon=1;
 	
 	public static String location="/home/thijs/Desktop/code/aa/tests";
     public static void main(String args[]) throws InterruptedException {
@@ -23,8 +23,9 @@ public class LoopOver {
     	  File dir = new File(location);
     	  File[] directoryListing = dir.listFiles();
     	  for(File f : directoryListing){
-    		  System.out.print("RDD="+f.getName().substring(10, 13));
-    		  System.out.print(";TF="+f.getName().substring(17, 20));
+    		  System.out.print("RDD=;"+f.getName().substring(11, 14));
+    		  System.out.print(";TF=;"+f.getName().substring(18, 21));
+    		  System.out.print(";size=;");
     		 algorithms.read_problem(f.getPath());
     		  System.out.println();
     		  Thread t = new Thread(new executeAprox());
@@ -32,8 +33,9 @@ public class LoopOver {
     		  long start=System.currentTimeMillis();
     		  t.join(timeout);
     		  if(t.isAlive()){
-    			  t.interrupt();
-    			  System.out.print("interupted;interupted;");
+    			  t.stop();
+    			  t.join();
+    			  System.out.print("interupted;;;interupted;");
     		  }
     	  }
     }
@@ -49,8 +51,8 @@ class executeAprox implements Runnable{
 	public void run() {
 		long time = System.currentTimeMillis();
 		schedule s = ApproximateScheduler.getSchedule(LoopOver.epsilon);
-		System.out.print(";duration="+(System.currentTimeMillis()-time));
-		System.out.println(";tardiness="+s.get_tardiness());
+		System.out.print(";duration=;"+(System.currentTimeMillis()-time));
+		System.out.println(";tardiness=;"+s.get_tardiness());
 	}
 	
 }
