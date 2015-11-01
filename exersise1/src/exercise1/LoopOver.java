@@ -31,6 +31,7 @@ public class LoopOver {
 
     		
     		  Thread t = new Thread(new executeAprox());
+    		  t.setPriority(Thread.MAX_PRIORITY);
     		  t.start();
     		  long start=System.currentTimeMillis();
     		  t.join(timeout);
