@@ -4,8 +4,8 @@ import java.io.File;
 
 public class LoopOver {
 
-    static int timeout = 180000;
-    static double epsilon = 1;
+    static int timeout = 15000;
+    static double epsilon = 2;
 
     public static String location = "C:\\Users\\Jorik\\Documents\\NetBeansProjects\\Advanced Algorithms\\tests";
 
@@ -41,7 +41,7 @@ class executeAprox implements Runnable {
         long time = System.currentTimeMillis();
         schedule s = ApproximateScheduler.getSchedule(LoopOver.epsilon);
         System.out.print(";duration=;" + (System.currentTimeMillis() - time));
-        System.out.println(";tardiness=;" + s.get_tardiness());
+        System.out.print(";tardiness=;" + s.get_tardiness());
     }
 
 }

@@ -73,3 +73,7 @@ nb-configuration.xml
 *.bak
 
 /Advanced Algorithms/nbproject/private/
+verslagOpdracht1.aux
+verslagOpdracht1.out
+verslagOpdracht1.pdf
+verslagOpdracht1.synctex.gz

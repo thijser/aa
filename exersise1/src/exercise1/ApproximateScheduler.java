@@ -18,6 +18,7 @@ public class ApproximateScheduler {
     	double highestTardiness=getMaxTardiness(jobs);
     	if(highestTardiness<0.0001) //avoid rounding errors
     		return schedule.MakeSchedule(jobs);
+        
     	double K = getK(jobs.size(),getMaxTardiness(jobs),epsilon);
     	double[] due=algorithms.due;
     	int[] proccesing = algorithms.processing;

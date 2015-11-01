@@ -66,7 +66,7 @@ class schedule implements Comparable {
     }
 
     public static schedule MakeSchedule(ArrayList<Integer> jobs){
-    	schedule s = new schedule();
+    	schedule s = null;
     	for(Integer i : jobs){
     		s=new schedule(s,i);
     	}
