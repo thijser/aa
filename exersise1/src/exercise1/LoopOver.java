@@ -23,12 +23,13 @@ public class LoopOver {
     	  File dir = new File(location);
     	  File[] directoryListing = dir.listFiles();
     	  for(File f : directoryListing){
+    		  System.out.println();
     		  System.out.print("RDD=;"+f.getName().substring(11, 14));
     		  System.out.print(";TF=;"+f.getName().substring(18, 21));
     		 algorithms.read_problem(f.getPath());
    		  System.out.print(";size=;"+algorithms.num_jobs);
 
-    		  System.out.println();
+    		
     		  Thread t = new Thread(new executeAprox());
     		  t.start();
     		  long start=System.currentTimeMillis();
