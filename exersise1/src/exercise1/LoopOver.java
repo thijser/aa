@@ -25,8 +25,9 @@ public class LoopOver {
     	  for(File f : directoryListing){
     		  System.out.print("RDD=;"+f.getName().substring(11, 14));
     		  System.out.print(";TF=;"+f.getName().substring(18, 21));
-    		  System.out.print(";size=;");
     		 algorithms.read_problem(f.getPath());
+   		  System.out.print(";size=;"+algorithms.num_jobs);
+
     		  System.out.println();
     		  Thread t = new Thread(new executeAprox());
     		  t.start();
